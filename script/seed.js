@@ -16,21 +16,21 @@ async function seed() {
     }),
     User.create({
       name: 'cody d',
-      email: 'cody@email.com',
+      email: 'mshalam@yahoo.com',
       password: '123',
       company: 'Fullstack',
       access: 'company admin'
     }),
     User.create({
       name: 'grace og',
-      email: 'grace@email.com',
+      email: 'reeceracer@aol.com',
       password: '123',
       company: 'Gracehopper',
       access: 'company admin'
     }),
     User.create({
       name: 'student 1901',
-      email: 'student1901@email.com',
+      email: 'mss619@nyu.edu',
       password: '123',
       company: 'Fullstack',
       access: 'user'

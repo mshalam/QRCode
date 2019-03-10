@@ -18,13 +18,11 @@ export class Qrcode extends Component {
   generateQR() {
     console.log('WHO Am I ', this.props.user.password)
 
-    let obj = `{
-      userId: ${this.props.selectedUser.id},
-      name: ${this.props.selectedUser.name}
-      email: ${this.props.selectedUser.email}
-      password: ${this.props.user.password}
-      company: ${this.props.selectedUser.company}
-    }`
+    let obj = `{"userId": ${this.props.selectedUser.id},"name": "${
+      this.props.selectedUser.name
+    }","email": "${this.props.selectedUser.email}","password": "${
+      this.props.user.password
+    }","company": "${this.props.selectedUser.company}"}`
 
     QRCode.toCanvas(document.getElementById('canvas'), obj, function(error) {
       if (error) console.error(error)
@@ -54,7 +52,11 @@ export class Qrcode extends Component {
       console.log(url)
       myUrl = url
     })
-    this.props.emailQr(myUrl)
+    this.props.emailQr(
+      myUrl,
+      this.props.selectedUser.email,
+      this.props.selectedUser.company
+    )
   }
 
   componentDidMount() {
@@ -89,8 +91,8 @@ const mapDispatch = dispatch => {
     whoAmI: () => {
       dispatch(me())
     },
-    emailQr: qr => {
-      dispatch(sendEmail(qr))
+    emailQr: (qr, email, company) => {
+      dispatch(sendEmail(qr, email, company))
     }
   }
 }

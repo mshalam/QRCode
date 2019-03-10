@@ -76,10 +76,14 @@ export const getPass = (userId, fn) => async dispatch => {
   }
 }
 
-export const sendEmail = qrCode => async dispatch => {
+export const sendEmail = (qrCode, email, company) => async dispatch => {
   try {
-    //console.log('qrCode: ', qrCode)
-    const response = await axios.post(`/auth/email/`, {qrCode: qrCode})
+    //console.log('qrCode: ', email)
+    const response = await axios.post(`/auth/email/`, {
+      qrCode: qrCode,
+      email: email,
+      company: company
+    })
   } catch (error) {
     console.log(error)
   }

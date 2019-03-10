@@ -73,6 +73,14 @@ router.post('/email/', (req, res, next) => {
     }
   })
 
+  let companyMessage = ``
+
+  if (req.body.company) {
+    companyMessage = `Use your QR code to access ${req.body.company}!`
+  } else {
+    companyMessage = `Use your QR code to get where you need to go!`
+  }
+
   let myHtml = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
   <html xmlns="http://www.w3.org/1999/xhtml">   
     <head>  
@@ -82,6 +90,17 @@ router.post('/email/', (req, res, next) => {
   </head>  
       <body style="margin: 0; padding: 0;"> 
         <table align="center" border="0" cellpadding="0" cellspacing="0" width="300" style="border-collapse: collapse;"> 
+        <tr> 
+            <td bgcolor="#ffffff" style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
+               <p align="center">${companyMessage}</p>              
+            </td>
+          </tr>
+        <tr>
+            <td align="center" bgcolor="#70bbd9" style="padding: 40px 0 30px 0;">
+               <img src="cid:logo" alt="images are blocked on your email, check attachments for your QR Code" width="250" height="200" style="display: block;" />
+               
+            </td>
+          </tr>
           <tr>
             <td align="center" bgcolor="#70bbd9" style="padding: 40px 0 30px 0;">
                <img src=${
@@ -90,23 +109,42 @@ router.post('/email/', (req, res, next) => {
                
             </td>
           </tr> 
-          <tr> 
-            <td bgcolor="#ffffff" style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
-               <p align="center">Use your QR code to get where you need to go!</p>
-            </td>
-          </tr>
+          
         </table>  
       </body>
  </html>`
 
+  let company = req.body.company ? req.body.company : ''
+  let logo = 'email_logo'
+
+  switch (req.body.company) {
+    case 'Fullstack': {
+      logo = 'fullstack_logo'
+      break
+    }
+    case 'Gracehopper': {
+      logo = 'gracehopper_logo'
+      break
+    }
+    default:
+      logo = 'email_logo'
+  }
+
+  console.log('my logo is', logo, req.body.company)
+
   const mailOptions = {
     from: 'mshalam04@gmail.com',
-    to: 'mshalam@yahoo.com',
-    subject: 'Sending Email using Node.js',
+    to: req.body.email,
+    subject: `${company} Buliding Access`,
     html: myHtml,
     attachments: [
       {
         path: req.body.qrCode
+      },
+      {
+        filename: 'email_logo.png',
+        path: __dirname + `/images/${logo}.png`,
+        cid: 'logo' //my mistake was putting "cid:logo@cid" here!
       }
     ]
   }

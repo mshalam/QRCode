@@ -47,7 +47,7 @@ class QrReaderComp extends Component {
 
   render() {
     return (
-      <div>
+      <div align="center">
         <QrReader
           delay={300}
           onError={this.handleError}
@@ -63,14 +63,32 @@ class QrReaderComp extends Component {
           )}
         </div>
 
-        <p>{this.state.result}</p>
-
         <div>
           {this.props.user.valid ? (
             this.props.user.valid === 'valid' ? (
-              this.props.user.valid
+              <div
+                align="center"
+                style={{
+                  backgroundColor: '#4BB543',
+                  padding: '40px 0 30px 0',
+                  fontFamily: 'Arial, sans-serif',
+                  fontSize: '24px'
+                }}
+              >
+                Access Granted
+              </div>
             ) : (
-              this.props.user.valid.error.response.data
+              <div
+                align="center"
+                style={{
+                  backgroundColor: '#FF0000',
+                  padding: '40px 0 30px 0',
+                  fontFamily: 'Arial, sans-serif',
+                  fontSize: '24px'
+                }}
+              >
+                Access Denied
+              </div>
             )
           ) : (
             <></>
