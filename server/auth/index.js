@@ -65,6 +65,8 @@ router.post('/validateQr', async (req, res, next) => {
 })
 
 router.post('/email/', (req, res, next) => {
+  console.log('PASWOOrd being printed !!!!!', process.env.emailPassword)
+
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
