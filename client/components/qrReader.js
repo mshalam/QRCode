@@ -36,7 +36,7 @@ class QrReaderComp extends Component {
     //lets validate if the user can come in ?
     if (!this.called) {
       console.log('valid route called')
-      this.props.checkValid(qr.email, 'hgfds')
+      this.props.checkValid(qr.email, qr.password)
       this.called = true
     }
   }
