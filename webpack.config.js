@@ -4,6 +4,7 @@ module.exports = {
   mode: isDev ? 'development' : 'production',
   entry: [
     '@babel/polyfill', // enables async-await
+    //'./instascan.min.js',
     './client/index.js'
   ],
   output: {

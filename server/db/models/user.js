@@ -3,6 +3,9 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const User = db.define('user', {
+  name: {
+    type: Sequelize.STRING
+  },
   email: {
     type: Sequelize.STRING,
     unique: true,
@@ -26,6 +29,12 @@ const User = db.define('user', {
   },
   googleId: {
     type: Sequelize.STRING
+  },
+  company: {
+    type: Sequelize.STRING
+  },
+  access: {
+    type: Sequelize.ENUM('admin', 'company admin', 'user')
   }
 })
 
