@@ -18,7 +18,6 @@ before_script:
 script:
   - npm test # test the code
   - npm run build-client # make the bundle
-  - npm run seed
 
 
  before_deploy:
