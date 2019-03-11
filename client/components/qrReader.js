@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import QrReader from 'react-qr-reader'
 import {validateQr} from '../store'
+import {Container} from 'semantic-ui-react'
 
 class QrReaderComp extends Component {
   constructor() {
@@ -47,12 +48,18 @@ class QrReaderComp extends Component {
 
   render() {
     return (
-      <div align="center">
+      <div
+        align="center"
+        style={{
+          display: 'block',
+          padding: '100px 0 0px 0'
+        }}
+      >
         <QrReader
-          delay={300}
+          delay={100}
           onError={this.handleError}
           onScan={this.handleScan}
-          style={{width: '15%', height: '90%'}}
+          style={{width: '20%'}}
         />
 
         <div>
