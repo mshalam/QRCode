@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import Qrcode from './qrcode'
 import {getAllMyUsers, showQR} from '../store'
+import {Container, Table, Button} from 'semantic-ui-react'
 
 /**
  * COMPONENT
@@ -23,71 +24,66 @@ export class UserHome extends Component {
 
     return (
       <div>
-        {this.props.user.showQr ? (
-          <div>
-            {' '}
-            <Qrcode selectedUser={this.state.selectedUser} />{' '}
-          </div>
-        ) : (
-          <div>
-            <h3 align="center">Welcome, {name.toUpperCase()}</h3>
-            <h4 align="center">
-              You can manage user access for{' '}
-              {company ? company.toUpperCase() : 'All Companies'}
-            </h4>
-            <table>
-              <tbody>
-                <tr>
-                  <th>Id</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Company</th>
-                  <th>Access</th>
-                  <th>SendQr</th>
-                </tr>
-              </tbody>
-              {this.props.user.users ? (
-                <>
-                  {this.props.user.users[0].map(currUser => {
-                    return (
-                      <tbody key={currUser.id}>
-                        <tr>
-                          <td>{currUser.id}</td>
-                          <td>{currUser.name}</td>
-                          <td>{currUser.email}</td>
-                          <td>{currUser.company}</td>
-                          <td>
-                            <select>
-                              <option value={currUser.access}>
-                                {currUser.access}
-                              </option>
-                              <option value="saab">Company Admin</option>
-                              <option value="mercedes">user</option>
-                            </select>
-                          </td>
-                          <td>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                this.setState({selectedUser: currUser})
-                                this.props.showQRCode()
-                              }}
-                            >
-                              Generate QR!
-                            </button>
-                          </td>
-                          <td>
-                            <button type="button">Delete User</button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    )
-                  })}
-                </>
-              ) : null}
-            </table>
-          </div>
-        )}
+        <Container text style={{marginTop: '7em'}}>
+          {this.props.user.showQr ? (
+            <div align="center">
+              <Qrcode selectedUser={this.state.selectedUser} />
+            </div>
+          ) : (
+            <div>
+              <h3 align="center">Welcome, {name.toUpperCase()}</h3>
+              <h4 align="center">
+                You can manage user access for{' '}
+                {company ? company.toUpperCase() : 'All Companies'}
+              </h4>
+              <Table inverted>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell>Id</Table.HeaderCell>
+                    <Table.HeaderCell>Name</Table.HeaderCell>
+                    <Table.HeaderCell>Email</Table.HeaderCell>
+                    <Table.HeaderCell>Company</Table.HeaderCell>
+                    <Table.HeaderCell>Access</Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                {this.props.user.users ? (
+                  <>
+                    {this.props.user.users[0].map(currUser => {
+                      return (
+                        <Table.Body key={currUser.id}>
+                          <Table.Row>
+                            <Table.Cell>{currUser.id}</Table.Cell>
+                            <Table.Cell>{currUser.name}</Table.Cell>
+                            <Table.Cell>{currUser.email}</Table.Cell>
+                            <Table.Cell>{currUser.company}</Table.Cell>
+                            <Table.Cell>{currUser.access}</Table.Cell>
+                            <Table.Cell>
+                              <Button
+                                inverted
+                                color="green"
+                                onClick={() => {
+                                  this.setState({selectedUser: currUser})
+                                  this.props.showQRCode()
+                                }}
+                              >
+                                Generate QR!
+                              </Button>
+                            </Table.Cell>
+                            <Table.Cell>
+                              <Button inverted color="red">
+                                <i className="trash alternate icon" />
+                              </Button>
+                            </Table.Cell>
+                          </Table.Row>
+                        </Table.Body>
+                      )
+                    })}
+                  </>
+                ) : null}
+              </Table>
+            </div>
+          )}
+        </Container>
       </div>
     )
   }

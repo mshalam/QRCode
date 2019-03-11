@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import QRCode from 'qrcode'
 import {getPass, me, sendEmail} from '../store'
+import {ToastContainer, toast} from 'react-toastify'
+import {Container, Button} from 'semantic-ui-react'
 
 /**
  * COMPONENT
@@ -59,6 +61,10 @@ export class Qrcode extends Component {
     )
   }
 
+  notify() {
+    toast.success('Email Sent Successfully')
+  }
+
   componentDidMount() {
     this.props.getPassword(this.props.selectedUser.id, this.generateQR)
   }
@@ -67,9 +73,24 @@ export class Qrcode extends Component {
     console.log(this.props, this.props.whoAmI)
     return (
       <div>
-        <h3>QR Code </h3>
-        <canvas id="canvas"> </canvas>
-        <button onClick={this.sendQrEmail}>Email QR</button>
+        <Container>
+          <h3>QR Code for {this.props.selectedUser.name.toUpperCase()} </h3>
+          <canvas id="canvas" align="center" />
+        </Container>
+        <Container>
+          <Button
+            inverted
+            color="blue"
+            onClick={() => {
+              this.sendQrEmail()
+              this.notify()
+            }}
+          >
+            Email QR Code
+            <i className="envelope outline icon" />
+          </Button>
+          <ToastContainer />
+        </Container>
       </div>
     )
   }
